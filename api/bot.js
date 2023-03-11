@@ -87,14 +87,25 @@ bot.on("message", async (ctx) => {
     const lyrics = await firstSong.lyrics();
 
     const maxLength = 4000;
-    const chunks = lyrics.match(new RegExp(`.{1,${maxLength}}`, "g")) || [];
 
-    for (const chunk of chunks) {
-      await ctx.reply(`<b>${chunk}</b>`, {
+    if (lyrics.length > maxLength) {
+      // Split
+
+      const chunks = lyrics.match(/(.|[\r\n]){1,4096}/g);
+
+      for (const chunk of chunks) {
+        await ctx.reply(`<b>${chunk}</b>`, {
+          parse_mode: "HTML",
+          reply_to_message_id: ctx.message.message_id,
+        });
+      }
+    } else {
+      await ctx.reply(`<b>${lyrics}</b>`, {
         parse_mode: "HTML",
         reply_to_message_id: ctx.message.message_id,
       });
     }
+
     console.log(`Lyrics for ${ctx.message.text} sent successfully.`);
   } catch (error) {
     if (error instanceof GrammyError) {
