@@ -1,0 +1,8 @@
+{
+	"dependencies": {
+		"dotenv": "^16.0.3",
+		"genius-lyrics": "^4.4.3",
+		"grammy": "^1.15.1"
+	},
+	"type": "module"
+}
