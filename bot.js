@@ -86,12 +86,27 @@ bot.on("message", async (ctx) => {
     const firstSong = searches[0];
     const lyrics = await firstSong.lyrics();
 
-    await ctx
-      .reply(`<b>${lyrics}</b>`, {
+    const maxLength = 4000;
+
+    if (lyrics.length > maxLength) {
+      // Split
+
+      const chunks = lyrics.match(/(.|[\r\n]){1,4096}/g);
+
+      for (const chunk of chunks) {
+        await ctx.reply(`<b>${chunk}</b>`, {
+          parse_mode: "HTML",
+          reply_to_message_id: ctx.message.message_id,
+        });
+      }
+    } else {
+      await ctx.reply(`<b>${lyrics}</b>`, {
         parse_mode: "HTML",
         reply_to_message_id: ctx.message.message_id,
-      })
-      .then(console.log(`Lyrics for ${ctx.message.text} sent successfully.`));
+      });
+    }
+
+    console.log(`Lyrics for ${ctx.message.text} sent successfully.`);
   } catch (error) {
     if (error instanceof GrammyError) {
       if (error.message.includes("Forbidden: bot was blocked by the user")) {
