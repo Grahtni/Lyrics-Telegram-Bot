@@ -87,8 +87,8 @@ bot.on("message", async (ctx) => {
     const lyrics = await firstSong.lyrics();
 
     await ctx
-      .reply(`*${lyrics}*`, {
-        parse_mode: "Markdown",
+      .reply(`<b>${lyrics}</b>`, {
+        parse_mode: "HTML",
         reply_to_message_id: ctx.message.message_id,
       })
       .then(console.log(`Lyrics for ${ctx.message.text} sent successfully.`));
