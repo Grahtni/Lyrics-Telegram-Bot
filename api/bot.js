@@ -34,21 +34,17 @@ bot.command("start", async (ctx) => {
     return;
   }
   await ctx
-    .reply(
-      "*Welcome!* ✨\n_This is a private summarizer bot for @anzubo.\nIf you want to request access please get in touch!_",
-      {
-        parse_mode: "Markdown",
-      }
-    )
+    .reply("*Welcome!* ✨\n_Send a song name to get lyrics._", {
+      parse_mode: "Markdown",
+    })
     .then(console.log("New user added:\n", ctx.from));
 });
 
 bot.command("help", async (ctx) => {
   await ctx
-    .reply(
-      "*@anzubo Project.*\n\n_This is a utility bot using OpenAI's API (paid) to summarize long texts or articles.\nUnauthorized use is not permitted.\nIn the future I may allow users to set their own API keys._",
-      { parse_mode: "Markdown" }
-    )
+    .reply("*@anzubo Project.*\n\n_This is a bot to get song lyrics. _", {
+      parse_mode: "Markdown",
+    })
     .then(console.log("Help command sent to", ctx.chat.id));
 });
 
